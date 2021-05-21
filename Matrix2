@@ -1,1 +1,20 @@
+def lijstmetmatrices(n, rho, timesteps, vmax, p, periode): 
+    dataweg1=updatenmatrixweg1(n, rho, timesteps, vmax, p, periode)
+    dataweg2=updatenmatrixweg1(n, rho, timesteps, vmax, p, periode)
+    intersectie = math.floor(n/2) #bepaal intersectie cell
+    light=trafficlightweg1(periode, timesteps)
+    lijst=[]
+    
+    for i in range(timesteps+1):
+        matrix=np.ones((n,n))*[-1]
+        if light[i]==1:
+            matrix[intersectie,:]= dataweg1[i,:] #rij
+            matrix[:,intersectie]= dataweg2[i,:]#kolom
+            lijst.append(matrix)
+        else:
+            matrix[:,intersectie]= dataweg2[i,:]#kolom
+            matrix[intersectie,:]= dataweg1[i,:] #rij
+            lijst.append(matrix)
 
+        
+    return(lijst)
